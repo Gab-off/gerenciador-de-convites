@@ -2,10 +2,6 @@
 
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
- var_dump($_POST);   
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h1>Digite seu nome e escolha seu ingresso: </h1>
-<form action="" method="post">
+<form action="utilities/user_checkin_validator.php" method="post">
     <label for="user">
         <input type="text" id="user" name="user" placeholder="Nome" required>
     </label>
@@ -28,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </select>
 
     <br>
-    <input type="checkbox" id="vegetariano" name="restricoes[]"><label for="vegetariano">Vegetariano</label>
+    <input type="checkbox" id="vegetariano" name="restricoes[]" value="vegetariano"><label for="vegetariano">Vegetariano</label>
     <br>
-    <input type="checkbox" id="vegano" name="restricoes[]"><label for="vegano">Vegano</label>
+    <input type="checkbox" id="vegano" name="restricoes[]" value="vegano"><label for="vegano">Vegano</label>
     <br>
-    <input type="checkbox" id="intolerante" name="restricoes[]"><label for="intolerante">Intolerante a lactose</label>
+    <input type="checkbox" id="intolerante" name="restricoes[]" value="intolerante"><label for="intolerante">Intolerante a lactose</label>
     <br>
     <br>
     
