@@ -1,32 +1,41 @@
 <?php
 
 session_start();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+$validateIngressos = ['pista', 'camarote', 'vip'];
+$validateRestricoes = ['vegetariano', 'vegano', 'intolerante' ];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error = "";
-    $novo_convidado = [];
-    $restricoes = $_POST["restricoes"] ?? [];
 
-    if (empty($_POST["username"])) {
-        $error = "O nome de usuário é obrigatório.";
-    } elseif (empty($restricoes)) {
-        $restricoes = ["usuário não tem restrições"];
+    $user = htmlspecialchars($_POST['user']) ;
+    $ingresso = $_POST['ingresso'];
+    $restricoes = $_POST['restricoes'] ?? [];
+
+    if (!in_array($ingresso, $validateIngressos)) {
+    $error = 'Opção inválida de ingresso, escolha uma opção válida';
     } else {
-        $novo_convidado = [
-            "username" => $_POST["username"],
-            "ingresso" => $_POST["ingresso"],
-            "restricoes" => $restricoes,
+        foreach ($restricoes as $restricao) {
+            if (!in_array($restricao, $validateRestricoes)) {
+                $error = 'Opção de restrição inválida, escolha uma opção válida';
+                break;
+            }
+        }    
+    }
+
+    if (empty($error)) {
+        $convite_finalizado = [
+            'user'=> $user,
+            'ingresso'=> $ingresso,
+            'restricoes'=> $restricoes
         ];
-    }
-
-    if (!empty($error)) {
+    
+        $_SESSION["lista_convidados"][] = $convite_finalizado;
+        $_SESSION['success'] = "Seu ingresso foi adicionado com sucesso na lista.";
+    } else {
         $_SESSION["error"] = $error;
-        header("Location: ../index.php");
-        exit();
     }
+
+    header("Location: ../index.php");
+    exit;
 }
-
-$_SESSION["novo_convidado"] = $novo_convidado;
-header("Location: ../showConvidado.php");
-exit();
-
-?>

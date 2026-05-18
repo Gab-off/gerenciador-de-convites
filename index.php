@@ -1,7 +1,18 @@
 <?php
 
 session_start();
+$sucesso = "";
+$error = ""; 
 
+if (isset($_SESSION["success"])) {
+    $sucesso = $_SESSION["success"];
+    unset($_SESSION["success"]);
+} 
+
+if(isset($_SESSION["error"])) {
+    $error = $_SESSION["error"];
+    unset($_SESSION["error"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +29,7 @@ session_start();
         <input type="text" id="user" name="user" placeholder="Nome" required>
     </label>
     <select name="ingresso" id="ingresso">
-        <option value="pista">Pista</option>
+        <option value="pista" selected>Pista</option>
         <option value="camarote">Camarote</option>
         <option value="vip">VIP</option>
     </select>
@@ -33,6 +44,9 @@ session_start();
     <br>
     
     <input type="submit" value="Confirmar">
+
+    <p style="color: green"><?= $sucesso ?></p>
+    <p style="color: red"><?= $error ?></p>
 </form>
 <a href="login_page.php">painel de administração de convidados</a>
 </body>

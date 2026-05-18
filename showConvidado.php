@@ -2,12 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
+    header('Location: ../index.php');
     exit;
 }
 
-$novo_convidado = $_SESSION['novo_convidado'];
-unset($_SESSION['novo_convidado']);
+$lista_convidados = $_SESSION['lista_convidados'];
+
 
 ?>
 <!DOCTYPE html>
@@ -17,6 +17,8 @@ unset($_SESSION['novo_convidado']);
 </head>
 <body>
     <h1>Show Convidado</h1>
-    <p><?php echo $novo_convidado; ?></p>
+    <?php  foreach ($lista_convidados as $value) : ?>
+        <?= $value['user'] ?><?= $value['ingresso'] ?><?= $value['restricoes'] ?>
+        <?php endforeach ?>
 </body>
 </html>
