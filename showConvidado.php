@@ -15,10 +15,31 @@ $lista_convidados = $_SESSION['lista_convidados'];
 <head>
     <title>Show Convidado</title>
 </head>
+<style>
+    table, th, td {
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+    }
+</style>
 <body>
-    <h1>Show Convidado</h1>
-    <?php  foreach ($lista_convidados as $value) : ?>
-        <?= $value['user'] ?><?= $value['ingresso'] ?><?= $value['restricoes'] ?>
-        <?php endforeach ?>
+    <h1>Confirmados até o momento: <?= count($lista_convidados) ?></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Convidado</th>
+                <th>Ingresso</th>
+                <th>Restrições</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php  foreach ($lista_convidados as $value) : ?>
+            <tr>
+                <td><?= $value['user'] ?></td>
+                <td><?= $value['ingresso'] ?></td>
+                <td><?= implode(', ', $value['restricoes']) ?></td>
+            </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
 </body>
 </html>

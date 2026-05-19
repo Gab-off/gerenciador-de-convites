@@ -8,9 +8,21 @@ $validateRestricoes = ['vegetariano', 'vegano', 'intolerante' ];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error = "";
 
-    $user = htmlspecialchars($_POST['user']) ;
-    $ingresso = $_POST['ingresso'];
+    $user = htmlspecialchars($_POST['user'] ?? '') ;
+    $ingresso = $_POST['ingresso'] ?? '';
     $restricoes = $_POST['restricoes'] ?? [];
+
+    if (empty(trim($user))) {
+        $error = 'O nome de usuário é obrigatório.';
+    }
+
+    if (empty(trim($ingresso))) {
+        $error = 'O ingresso é obrigatório.';
+    }
+
+    if (empty($restricoes)) {
+        $restricoes = ['Sem nenhuma restrição'];
+    }
 
     if (!in_array($ingresso, $validateIngressos)) {
     $error = 'Opção inválida de ingresso, escolha uma opção válida';
@@ -22,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }    
     }
+
+    
 
     if (empty($error)) {
         $convite_finalizado = [
